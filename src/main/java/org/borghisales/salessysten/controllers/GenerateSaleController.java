@@ -7,15 +7,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.borghisales.salessysten.model.*;
+import org.borghisales.salessysten.util.DiscountRate;
+import org.borghisales.salessysten.util.ViewFiles;
 
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -48,6 +48,9 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private Customer customer;
     private final ProductDAO productDAO = new ProductDAO();
+    //cbox
+    private final ObservableList<DiscountRate> discountList = FXCollections.observableArrayList(DiscountRate.CERO, DiscountRate.DIEZ,
+            DiscountRate.QUINCE, DiscountRate.VEINTE, DiscountRate.CINCUENTA);
 
     @FXML
     private TextField serial;
@@ -69,7 +72,16 @@ public class GenerateSaleController extends MenuController implements Initializa
     private TextField total;
     @FXML
     private TextField date;
-
+    //nuevos atributos
+    @FXML
+    private TextField subtotal;
+    @FXML
+    private TextField iva;
+    @FXML
+    private ComboBox<DiscountRate> cbDiscount;
+    @FXML
+    private TextField saving;
+    //
     @FXML
     private Spinner<Integer> quantity;
     @FXML
@@ -84,8 +96,14 @@ public class GenerateSaleController extends MenuController implements Initializa
     private TableColumn<ShoppingCart, Integer> colQuantity;
     @FXML
     private TableColumn<ShoppingCart, Double> colPrice;
+    // nuevos atributos
     @FXML
-    private TableColumn<ShoppingCart,Double> colTotal;
+    private TableColumn<ShoppingCart, Double> colSubtotal;
+    @FXML
+    private TableColumn<ShoppingCart, Double> colTotal;
+
+    //static final para el IVA
+    private static final double IVA_RATE = 0.16;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeUIElements();
@@ -98,6 +116,15 @@ public class GenerateSaleController extends MenuController implements Initializa
         setSerial();
         seller.setText(sellerName);
         date.setText(String.valueOf(now));
+        // nuevos atributos
+        subtotal.setText("0.0");
+        iva.setText("0.0");
+        initializeComboBox();
+    }
+
+    private void initializeComboBox() {
+        cbDiscount.setValue(DiscountRate.CERO);
+        cbDiscount.setItems(discountList);
     }
 
     private void configureAlerts() {
@@ -125,7 +152,12 @@ public class GenerateSaleController extends MenuController implements Initializa
         colProduct.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().product()));
         colQuantity.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().quantity()).asObject());
         colPrice.setCellValueFactory(p -> new SimpleDoubleProperty(p.getValue().price()).asObject());
+        //nuevas columnas en la tabla
+        colSubtotal.setCellValueFactory(p -> new SimpleDoubleProperty(p.getValue().subtotal()).asObject());
         colTotal.setCellValueFactory(p -> new SimpleDoubleProperty(p.getValue().total()).asObject());
+       //nuevas columnas a la tabla
+
+
     }
 
     public void searchCustomer(ActionEvent actionEvent) {
@@ -149,18 +181,19 @@ public class GenerateSaleController extends MenuController implements Initializa
     }
 
     private void openCustomerManagementView() {
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource(CUSTOMER_VIEW_FXML));
+        //utilizamos la clase Tab Controller
+        TabController.openNewTab(CUSTOMER_VIEW_FXML);
+        //FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource(CUSTOMER_VIEW_FXML));
+        //try {
+           // scene = new Scene(fxmlLoader.load());
+        //} catch (IOException e) {
+          //  throw new RuntimeException(e);
+        //}
 
-        try {
-            scene = new Scene(fxmlLoader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        stage = new Stage();
-        stage.setTitle("Manage Customer");
-        stage.setScene(scene);
-        stage.show();
+        //stage = new Stage();
+        //stage.setTitle("Manage Customer");
+        //stage.setScene(scene);
+       // stage.show();
     }
 
 
@@ -194,6 +227,8 @@ public class GenerateSaleController extends MenuController implements Initializa
     }
 
     private void openProductManagementView() {
+        TabController.openNewTab(ViewFiles.PRODUCT_VIEW_FXML);
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource(PRODUCT_VIEW_FXML));
 
         try {
@@ -206,6 +241,7 @@ public class GenerateSaleController extends MenuController implements Initializa
         stage.setTitle("Manage Product");
         stage.setScene(scene);
         stage.show();
+        */
     }
 
 
@@ -214,6 +250,12 @@ public class GenerateSaleController extends MenuController implements Initializa
         MenuController.cleanCells(codCustomer,codProduct,customerName,productName,price,stock);
         quantity.getValueFactory().setValue(null);
         tableSale.getItems().clear();
+
+        //borrar nuevos atributos
+        subtotal.setText("0.0");
+        cbDiscount.setValue(DiscountRate.CERO);
+        iva.setText("0.0");
+        //
         MenuController.setAlert(Alert.AlertType.INFORMATION,"Sale Canceled");
         total.clear();
     }
@@ -235,10 +277,14 @@ public class GenerateSaleController extends MenuController implements Initializa
         }
     }
 
+    // modificar para crear objeto de sales
     private Sales createSalesObject() {
+
+        //idCustomer, idSeller, numberSales, saleDate, subtotal, state, total, ivaRate, saving)
         return new Sales(customer.idCustomer(), idSeller, serial.getText(),
-                LocalDate.parse(date.getText()), Double.parseDouble(total.getText()),
-                Sales.State.ACTIVE);
+                LocalDate.parse(date.getText()), Double.parseDouble(subtotal.getText()),Sales.State.ACTIVE, Double.parseDouble(total.getText()),
+                Double.parseDouble(iva.getText()), Double.parseDouble(saving.getText()) );
+
     }
 
     private boolean saveSaleAndDetails(Sales sales) {
@@ -284,25 +330,31 @@ public class GenerateSaleController extends MenuController implements Initializa
             return;
         }
 
-        addToCartAndUpdateTotal(product);
+        addToCartAndUpdateTotals(product);
     }
 
     private ShoppingCart createShoppingCartObject() {
+
         return new ShoppingCart(contProducts++, codProduct.getText(),
                 productName.getText(), quantity.getValue(),
-                Double.parseDouble(price.getText()));
+                Double.parseDouble(price.getText()), getDiscountRate(),IVA_RATE);
     }
 
     private boolean isProductAlreadyInCart(ShoppingCart product) {
         return products.stream().anyMatch(e -> Objects.equals(e.cod(), product.cod()));
     }
 
-    private void addToCartAndUpdateTotal(ShoppingCart product) {
+    private void addToCartAndUpdateTotals(ShoppingCart product) {
         products.add(product);
         tableSale.setItems(products);
+        double currentSubTotal = Double.parseDouble(subtotal.getText()) + product.subtotal();
+        subtotal.setText(String.format("%.2f", currentSubTotal));
         double currentTotal = Double.parseDouble(total.getText()) + product.total();
         total.setText(String.format("%.2f", currentTotal));
+        iva.setText(String.format("%.2f", currentSubTotal*IVA_RATE));
+        saving.setText(String.format("%.2f",currentSubTotal*(1+IVA_RATE) - currentTotal));
     }
+
 
 
     private String validateInputs() {
@@ -320,5 +372,10 @@ public class GenerateSaleController extends MenuController implements Initializa
         serial.setText(formattedId);
     }
 
+    //nuevo metodo para el valor del descuento
+    private double getDiscountRate(){
+        DiscountRate dis = cbDiscount.getValue();
+        return dis.getRate();
+    }
 
 }

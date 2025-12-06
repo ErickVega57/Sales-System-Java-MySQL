@@ -33,7 +33,8 @@ public class SalesDAO {
         }
     }
     public boolean SaveSale(Sales sale){
-        String sql = "INSERT INTO sales (idCustomer,idSeller,numberSales,saleDate,amount,state) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO sales (idCustomer,idSeller,numberSales,saleDate,amount,state, subtotal, iva, discount) " +
+                "values(?,?,?,?,?,?,?,?,?)";
 
         try (Connection conn = DBConnection.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -42,8 +43,12 @@ public class SalesDAO {
             pstmt.setInt(2,sale.idSeller());
             pstmt.setString(3,sale.numberSales());
             pstmt.setDate(4, Date.valueOf(sale.saleDate()));
-            pstmt.setDouble(5,sale.amount());
+            pstmt.setDouble(5,sale.subtotal()); //total con IVA y descuento
             pstmt.setString(6,sale.state().name());
+            //nuevos atributos
+            pstmt.setDouble(7,sale.total());
+            pstmt.setDouble(8,sale.iva());
+            pstmt.setDouble(9,sale.discount());
 
             int rows_affected = pstmt.executeUpdate();
 
@@ -74,7 +79,6 @@ public class SalesDAO {
                     pstmt.setInt(2, Integer.parseInt(e.cod()));
                     pstmt.setInt(3, e.quantity());
                     pstmt.setDouble(4, e.price());
-
                     pstmt.executeUpdate();
 
                 }
@@ -106,7 +110,7 @@ public class SalesDAO {
             }
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error searching sales : " + e.getMessage());
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error searching sales : " + e.getMessage()+"aqui");
         }
 
 
@@ -144,7 +148,7 @@ public class SalesDAO {
 
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error searching sales : " + e.getMessage());
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error buscando sales : " + e.getMessage());
         }
     }
 
@@ -170,7 +174,7 @@ public class SalesDAO {
             }
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error searching sales : " + e.getMessage());
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error buscando sales : " + e.getMessage() + "detalles");
         }
 
     }

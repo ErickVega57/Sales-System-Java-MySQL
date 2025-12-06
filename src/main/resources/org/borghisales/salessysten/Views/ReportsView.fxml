@@ -31,7 +31,7 @@
                         <TableColumn fx:id="colIdSeller" prefWidth="75.0" text="idSeller" />
                         <TableColumn fx:id="colNumberSales" prefWidth="75.0" text="numberSales" />
                         <TableColumn fx:id="colSaleDate" prefWidth="75.0" text="saleDate" />
-                        <TableColumn fx:id="colAmount" prefWidth="75.0" text="amount" />
+                        <TableColumn fx:id="colSubtotal" prefWidth="75.0" text="subtotal" />
                         <TableColumn fx:id="colState" prefWidth="75.0" text="state" />
                     </columns>
                      <columnResizePolicy>

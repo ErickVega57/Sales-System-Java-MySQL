@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.HelpController">
+    <children>
+        <Label alignment="CENTER" layoutX="253.0" layoutY="14.0" prefHeight="45.0" prefWidth="295.0" text="Panel de Ayuda" underline="true">
+            <font>
+                <Font size="28.0" />
+            </font>
+        </Label>
+        <TextArea layoutY="60" prefHeight="518.0" prefWidth="800.0" fx:id="helpText" wrapText="true" editable="false">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextArea>
+    </children>
+
+</AnchorPane>
