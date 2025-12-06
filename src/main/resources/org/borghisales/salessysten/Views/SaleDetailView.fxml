@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="534.0" prefWidth="799.0" minHeight="534.0" minWidth="799.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.SaleDetailController">
+<AnchorPane minHeight="534.0" minWidth="799.0" prefHeight="534.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.SaleDetailController">
    <children>
       <TableView fx:id="tableSale" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="799.0">
          <columns>
@@ -12,7 +12,7 @@
             <TableColumn fx:id="colProduct" prefWidth="356.0" sortable="false" style="-fx-alignment: CENTER;" text="PRODUCT" />
             <TableColumn fx:id="colQuantity" minWidth="0.0" prefWidth="103.0" style="-fx-alignment: CENTER;" text="QUANTITY" />
             <TableColumn fx:id="colPrice" prefWidth="102.0" style="-fx-alignment: CENTER;" text="PRICE UNIT" />
-            <TableColumn fx:id="colTotal" prefWidth="94.0" style="-fx-alignment: CENTER;" text="TOTAL" />
+            <TableColumn fx:id="colTotal" prefWidth="94.0" style="-fx-alignment: CENTER;" text="SUBTOTAL" />
          </columns>
       </TableView>
       <TextField fx:id="totalSale" editable="false" layoutX="693.0" layoutY="501.0" prefHeight="25.0" prefWidth="91.0" />
