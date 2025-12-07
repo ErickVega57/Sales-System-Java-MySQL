@@ -11,12 +11,12 @@
 
 # Índice
 <!-- TOC -->
-* [📑 Descripcion del Proyecto](#-descripcion)
+* [📑 Descripcion del Proyecto](#-descripcion-del-proyecto)
 * [🧷 Manejo de Errores](#-manejo-de-errores)
-    * [Error 1](#-Error-1)
-    * [Configuracion de la Base de Datos](#configuración-de-la-base-de-datos)
-    * [Ejecucion del Proyecto](#ejecución-del-proyecto)
-    * [Modificacion de las Vistas con Scene Builder](#modificación-de-las-vistas-con-scene-builder)
+    * [Error 1](#-error-1-:)
+    * [Error 2](#-error-2-:)
+    * [Error 3](#-error-3-:)
+    * 
 * [🧬 Estructura Basica](#-estructura-basica)
 * [🗄️ Diagrama de Base de Datos](#-diagrama-de-base-de-datos)
 * [💡 Fucionalidades](#-fucionalidades)
@@ -29,6 +29,7 @@
 * [📝 Licencia](#-licencia)
 <!-- TOC -->
 
+## [+] Descripcion del Proyecto
 💻🎯🔒📗📚📈🧷☢️
 
 Documentation: 
