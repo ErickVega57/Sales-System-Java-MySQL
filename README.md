@@ -154,6 +154,7 @@ La Clase implementada fue <code>TabController</code> que aisla la lógica de est
         }
     }
 ```
+Ahora el título de la ventana obtiene el nombre correcto con el que se debería de mostrar
 ### *Error 3:*
 
 
