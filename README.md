@@ -95,7 +95,7 @@ Clearly outline your proposed changes in the README file.
 
 
 
-## [+] Video Presentción
+## [+] Video Presentación
 Action: Record a video showcasing your project.
 How to Do It:
 Use screen recording software to capture your screen.
