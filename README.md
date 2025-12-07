@@ -13,9 +13,9 @@
 <!-- TOC -->
 * [📑 Descripcion del Proyecto](#-descripcion-del-proyecto)
 * [🧷 Manejo de Errores](#-manejo-de-errores)
-    * [Error 1](#-error-1-:)
-    * [Error 2](#-error-2-:)
-    * [Error 3](#-error-3-:)
+    * [Error 1](#error-1-:)
+    * [Error 2](#error-2-:)
+    * [Error 3](#error-3-:)
     * 
 * [🧬 Estructura Basica](#-estructura-basica)
 * [🗄️ Diagrama de Base de Datos](#-diagrama-de-base-de-datos)
