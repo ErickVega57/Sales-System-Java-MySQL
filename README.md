@@ -12,7 +12,7 @@
 #
 # Índice
 <!-- TOC -->
-* [📑 Descripcion del Proyecto](#-descripcion-del-proyecto)
+* [📑 Descripción del Proyecto](#-descripción-del-proyecto)
 * [📗 Diagrama UML](#-diagrama-uml)
 * [🧷 Manejo de Errores](#-manejo-de-errores)
     * [Error 1](#error-1)
@@ -23,25 +23,13 @@
     * [Mejora 2](#mejora-2)
     * [Mejora 3](#mejora-3)
     * [Mejora 4](#mejora-4)
+* [💡 Mejoras Implementadas](#-mejoras-implementadas)
+    * [Implementación 1](#implementación-1)
+    * [Implementación 2 2](#implementación-2)
 * [📽️ Video Presentación](#-video-presentación)
 #  
 <!-- TOC -->
-
-💻🎯🔒📗📚📈🧷☢️
-
-```java
-  private void clearProductFields() {
-    codProduct.clear();
-    productName.clear();
-    price.clear();
-    stock.clear();
-    if (quantity.getValueFactory() != null) {
-        quantity.getValueFactory().setValue(0);
-    }
-}
-```
-## [+] Descripcion del Proyecto
-
+## [+] Descripción del Proyecto
 
 
 
@@ -182,18 +170,25 @@ Creating new classes or interfaces.
 Documentation:
 Clearly outline your proposed changes in the README file.
 
-### *Mejora 1:*
+### *Mejora 1:* <br><br>
+La primera propuesta de mejora consiste en implementar el cálculo del IVA en cada venta, de modo que los precios y montos finales resulten más realistas y acordes a un entorno comercial real. Con esta funcionalidad, el sistema de ventas no solo mostrará el subtotal de los productos, sino también el impuesto desglosado y el total a pagar, lo que permitirá tener un control más preciso de los ingresos, facilitar la elaboración de reportes contables y acercar el sistema a las necesidades de un negocio formal.
+
+### *Mejora 2:* <br><br>
+La segunda propuesta de mejora consiste en implementar una selección de descuentos directamente en la interfaz de usuario al momento de realizar una venta, permitiendo elegir entre distintos porcentajes de descuento según el vendedor. Además, el sistema mostrará de forma explícita el monto ahorrado gracias al descuento aplicado, lo que hace el cálculo más transparente tanto para el usuario del sistema como para el cliente. Con esta mejora, el sistema de ventas se vuelve más claro para el cliente y para el vendedor.
+
+### *Mejora 3:* <br><br>
 
 
-### *Mejora 2:*
+### *Mejora 4:* <br><br>
 
 
-### *Mejora 3:*
+## [+] Mejoras Implementadas
+
+### *Implementación 1:* <br><br>
+La implementación de la mejora fue...
 
 
-### *Mejora 4:*
-
-
+### *Implemenrtación 2:*
 
 
 
@@ -209,9 +204,16 @@ Log in and display all available UIs in a general way.
 Walk through the work you completed from point 2 to point 6.
 Upload: Choose a platform to upload your video (like YouTube or Vimeo) and paste the link in the README file under a special section for it.
 
+<a href="aqui va el link del video">
+  <img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Youtube">
+</a>
 
 
 
+
+
+
+💻🎯🔒📗📚📈🧷☢️
 
 
 
