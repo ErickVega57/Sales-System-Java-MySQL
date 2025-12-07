@@ -182,10 +182,5 @@ ALTER TABLE sales
     ADD COLUMN discount DOUBLE NOT NULL DEFAULT 0;
 
 
-ALTER TABLE sales_details
-    ADD COLUMN subtotal DOUBLE NOT NULL DEFAULT 0,
-    ADD COLUMN iva DOUBLE NOT NULL DEFAULT 0,
-    ADD COLUMN discount DOUBLE NOT NULL DEFAULT 0;
-
 
 -- Se deben de agregar las columnas a la base de datos
