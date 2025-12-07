@@ -42,22 +42,25 @@
 ```
 ## [+] Descripcion del Proyecto
 
+
+
+
+
 ## [+] Diagrama UML
 
 Use a digital tool (like Lucidchart, Draw.io, or any UML software) to create a UML diagram that represents these entities.
 Ensure that the diagram is clear and accurately reflects the structure of the code.
 Important: Add the UML diagram to the README file in the repository.
 
+
+
+
+
+
 ## [+] Manejo de Errores
-Documentation: 
-Identify at least three errors that you encounter.
-For each error, document:
-What the error was.
-How you resolved it.
-Include this information in the README file.
 
-
-### *Error 1:*
+### *Error 1:* 
+  El primer error identificado en el proyecto 
 
 
 ### *Error 2:*
