@@ -9,29 +9,46 @@
   <img src="src/main/resources/images/shopping cart.png" />
 </p>
 
+#
 # Índice
 <!-- TOC -->
 * [📑 Descripcion del Proyecto](#-descripcion-del-proyecto)
+* [📗 Diagrama UML](#-diagrama-uml)
 * [🧷 Manejo de Errores](#-manejo-de-errores)
-    * [Error 1](#error-1-:)
-    * [Error 2](#error-2-:)
-    * [Error 3](#error-3-:)
-    * 
-* [🧬 Estructura Basica](#-estructura-basica)
-* [🗄️ Diagrama de Base de Datos](#-diagrama-de-base-de-datos)
-* [💡 Fucionalidades](#-fucionalidades)
-    * [Inicio de Sesion](#inicio-de-sesión)
-    * [Pantalla Principal](#pantalla-principal)
-        * [Sales](#sales)
-        * [Management](#management)
-        * [Reports](#reports)
-* [📧 Contacto](#-contacto)
-* [📝 Licencia](#-licencia)
+    * [Error 1](#error-1)
+    * [Error 2](#error-2)
+    * [Error 3](#error-3)
+* [💡 Propuesta de Mejoras](#-propuesta-de-mejoras)
+    * [Mejora 1](#error-1)
+    * [Mejora 2](#mejora-2)
+    * [Mejora 3](#mejora-3)
+    * [Mejora 4](#mejora-4)
+* [📽️ Video Presentación](#-video-presentacion)
+#  
 <!-- TOC -->
 
-## [+] Descripcion del Proyecto
 💻🎯🔒📗📚📈🧷☢️
 
+```java
+  private void clearProductFields() {
+    codProduct.clear();
+    productName.clear();
+    price.clear();
+    stock.clear();
+    if (quantity.getValueFactory() != null) {
+        quantity.getValueFactory().setValue(0);
+    }
+}
+```
+## [+] Descripcion del Proyecto
+
+## [+] Diagrama UML
+
+Use a digital tool (like Lucidchart, Draw.io, or any UML software) to create a UML diagram that represents these entities.
+Ensure that the diagram is clear and accurately reflects the structure of the code.
+Important: Add the UML diagram to the README file in the repository.
+
+## [+] Manejo de Errores
 Documentation: 
 Identify at least three errors that you encounter.
 For each error, document:
@@ -39,16 +56,18 @@ What the error was.
 How you resolved it.
 Include this information in the README file.
 
-## [+] Manejo de Errores
 
 ### *Error 1:*
 
-UML Diagram:
-Use a digital tool (like Lucidchart, Draw.io, or any UML software) to create a UML diagram that represents these entities.
-Ensure that the diagram is clear and accurately reflects the structure of the code.
-Important: Add the UML diagram to the README file in the repository.
+
+### *Error 2:*
 
 
+### *Error 3:*
+
+
+
+## [+] Propuesta de Mejoras
 Propose Improvements
 Action: Suggest enhancements for the Seller, Sales, Customer, and Product entities.
 How to Do It:
@@ -60,8 +79,23 @@ Creating new classes or interfaces.
 Documentation:
 Clearly outline your proposed changes in the README file.
 
+### *Mejora 1:*
 
-. Create a Video Presentation
+
+### *Mejora 2:*
+
+
+### *Mejora 3:*
+
+
+### *Mejora 4:*
+
+
+
+
+
+
+## [+] Video Presentción
 Action: Record a video showcasing your project.
 How to Do It:
 Use screen recording software to capture your screen.
