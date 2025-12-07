@@ -11,9 +11,9 @@
 
 # Índice
 <!-- TOC -->
-* [📑 Descripcion](#-descripcion)
+* [📑 Descripcion del Proyecto](#-descripcion)
 * [🧷 Manejo de Errores](#-manejo-de-errores)
-    * [Instalacion del JDK 17](#instalación-del-jdk-17)
+    * [Error 1](#-Error-1)
     * [Configuracion de la Base de Datos](#configuración-de-la-base-de-datos)
     * [Ejecucion del Proyecto](#ejecución-del-proyecto)
     * [Modificacion de las Vistas con Scene Builder](#modificación-de-las-vistas-con-scene-builder)
