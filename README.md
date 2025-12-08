@@ -178,18 +178,18 @@ La primera propuesta de mejora consiste en implementar el cálculo del IVA en ca
 La segunda propuesta de mejora consiste en implementar una selección de descuentos directamente en la interfaz de usuario al momento de realizar una venta, permitiendo elegir entre distintos porcentajes de descuento según el vendedor. Además, el sistema mostrará de forma explícita el monto ahorrado gracias al descuento aplicado, lo que hace el cálculo más transparente tanto para el usuario del sistema como para el cliente. Con esta mejora, el sistema de ventas se vuelve más claro para el cliente y para el vendedor.
 
 ### *Mejora 3:* <br><br>
-
+La tercera propuesta consiste en implementar la funcionalidad de envío de productos en cada venta, y cálculo total de la venta con envio , permitiendo que el sistema distinga entre envío estándar y envío exprés, mostrando el costo correspondiente y sumándolo automáticamente al total de la venta. Esto permitirá reflejar de manera más realista los montos finales y ofrecer al cliente opciones de envío según sus necesidades.
 
 ### *Mejora 4:* <br><br>
-
+La cuarta propuesta consite en implementar una funcionalidad que detecte cuando el inventario de un producto esté por debajo de un umbral mínimo y notifique al usuario antes de completar la venta. Esto permite prevenir la venta de productos agotados o con stock insuficiente, asegurando una gestión más eficiente del inventario y mejorando la experiencia del cliente.
 
 ## [+] Mejoras Implementadas
 
 ### *Implementación 1:* <br><br>
-Para integrar ambas mejoras en el proceso de venta *el cálculo del IVA* y *la aplicación de descuentos* se realizaron modificaciones en el mismo apartado del sistema encargado de gestionar los totales de cada compra. La implementación comenzó incorporando nuevos atribustos al objeto sales, ya que aqui se guardan los atributos de cada venta. <br>
+Para integrar ambas mejoras en el proceso de venta *el cálculo del IVA* y *la aplicación de descuentos* se realizaron modificaciones en el mismo apartado del sistema encargado de gestionar los totales de cada compra. La implementación comenzó incorporando nuevos atributos al objeto sales, ya que aqui se guardan los atributos de cada venta. <br>
 Los atributos a agregar son:
   + Discount
-  + Iva
+  + Iva 
   + Subtotal
 Para poder saber cuanto fue el impuesto, el descuento, y el subtotal (total sin iva ni descuento)<br>
 Como queremos que los datos sean persistentes, primero agregamos las nuevas tablas a la base de datos.
@@ -310,8 +310,8 @@ En la interfaz de usuario también se realizaron ajustes: se agregó un componen
 Con esta implementación conjunta, el sistema ahora ofrece un cálculo más completo, transparente y funcional, integrando tanto la gestión de impuestos como la flexibilidad de aplicar descuentos dentro de un mismo flujo de trabajo, mejorando la precisión y usabilidad del módulo de ventas.
 
 
-### *Implemenrtación 2:*
-
+### *Implemenrtación 2:* <br><br>
+Se implementó un 
 
 
 
