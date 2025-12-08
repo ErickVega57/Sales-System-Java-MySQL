@@ -5,57 +5,83 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="405.0" prefWidth="306.0"
-            xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.borghisales.salessysten.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.MainController">
 
-    <VBox alignment="CENTER" spacing="20.0" prefWidth="350.0" prefHeight="450.0"
-          xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml">
+    <children>
 
-        <ImageView fitHeight="71.0" fitWidth="73.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <!-- Fondo -->
+        <ImageView fitHeight="500.0" fitWidth="500.0" preserveRatio="false">
             <image>
-                <Image url="@../../../../images/img.png"/>
+                <Image url="@../../../../images/fondo2.jpg"/>
             </image>
         </ImageView>
 
-        <Label alignment="CENTER"
-               prefHeight="45.0" prefWidth="300.0"
-               text="SISTEMA DE VENTAS" underline="true">
+        <!-- Logo Superior -->
+        <ImageView fitHeight="100.0" fitWidth="100.0" preserveRatio="true">
+            <image>
+                <Image url="@../../../../images/logo1.jpeg"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="185.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+
+        <!-- Imagen adicional -->
+            <image>
+                <Image url="@../../../../images/user.jpeg"/>
+            </image>
+        </ImageView>
+
+        <Label
+                alignment="CENTER"
+                layoutX="100.0" layoutY="22.0"
+                prefHeight="45.0" prefWidth="300.0"
+                text="SISTEMA DE VENTAS"
+                underline="true">
             <font>
                 <Font size="28.0"/>
             </font>
         </Label>
 
-        <Label alignment="CENTER"
-               prefHeight="45.0" prefWidth="170.0"
-               text="USUARIO" textAlignment="CENTER" wrapText="true">
+        <Label
+                alignment="CENTER"
+                blendMode="SRC_ATOP"
+                layoutX="170.0" layoutY="220.0"
+                prefHeight="45.0" prefWidth="170.0"
+                text="USUARIO"
+                textAlignment="CENTER"
+                wrapText="true">
             <font>
                 <Font size="28.0"/>
             </font>
         </Label>
 
-        <TextField fx:id="user" prefWidth="200.0"/>
-
-        <Label alignment="CENTER"
-               prefHeight="45.0" prefWidth="200.0"
-               text="CONTRASEÑA">
+        <Label
+                alignment="CENTER"
+                layoutX="160.0" layoutY="300.0"
+                prefHeight="45.0" prefWidth="200.0"
+                text="CONTRASEÑA">
             <font>
                 <Font size="28.0"/>
             </font>
         </Label>
 
-        <PasswordField fx:id="password" prefWidth="200.0"/>
+        <TextField
+                fx:id="user"
+                layoutX="180.0"
+                layoutY="270.0"/>
 
-        <Button mnemonicParsing="false"
+        <PasswordField
+                fx:id="password"
+                layoutX="180.0"
+                layoutY="350.0"/>
+
+
+        <Button
+                layoutX="200.0" layoutY="400.0"
+                mnemonicParsing="false"
                 onAction="#signIn"
-                prefHeight="33.0" prefWidth="150.0"
+                prefHeight="33.0" prefWidth="119.0"
                 text="INICIAR SESION"/>
 
-    </VBox>
 
-
+    </children>
 </AnchorPane>
