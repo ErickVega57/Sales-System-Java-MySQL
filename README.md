@@ -12,7 +12,7 @@
 #
 # Índice
 <!-- TOC -->
-* [📑 Descripcion del Proyecto](#-descripcion-del-proyecto)
+* [📑 Descripción del Proyecto](#-descripción-del-proyecto)
 * [📗 Diagrama UML](#-diagrama-uml)
 * [🧷 Manejo de Errores](#-manejo-de-errores)
     * [Error 1](#error-1)
@@ -23,25 +23,13 @@
     * [Mejora 2](#mejora-2)
     * [Mejora 3](#mejora-3)
     * [Mejora 4](#mejora-4)
+* [💡 Mejoras Implementadas](#-mejoras-implementadas)
+    * [Implementación 1](#implementación-1)
+    * [Implementación 2 2](#implementación-2)
 * [📽️ Video Presentación](#-video-presentación)
 #  
 <!-- TOC -->
-
-💻🎯🔒📗📚📈🧷☢️
-
-```java
-  private void clearProductFields() {
-    codProduct.clear();
-    productName.clear();
-    price.clear();
-    stock.clear();
-    if (quantity.getValueFactory() != null) {
-        quantity.getValueFactory().setValue(0);
-    }
-}
-```
-## [+] Descripcion del Proyecto
-
+## [+] Descripción del Proyecto
 
 
 
@@ -166,6 +154,7 @@ La Clase implementada fue <code>TabController</code> que aisla la lógica de est
         }
     }
 ```
+Ahora el título de la ventana obtiene el nombre correcto con el que se debería de mostrar.
 ### *Error 3:*
 
 
@@ -182,18 +171,146 @@ Creating new classes or interfaces.
 Documentation:
 Clearly outline your proposed changes in the README file.
 
-### *Mejora 1:*
+### *Mejora 1:* <br><br>
+La primera propuesta de mejora consiste en implementar el cálculo del IVA en cada venta, de modo que los precios y montos finales resulten más realistas y acordes a un entorno comercial real. Con esta funcionalidad, el sistema de ventas no solo mostrará el subtotal de los productos, sino también el impuesto desglosado y el total a pagar, lo que permitirá tener un control más preciso de los ingresos, facilitar la elaboración de reportes contables y acercar el sistema a las necesidades de un negocio formal.
+
+### *Mejora 2:* <br><br>
+La segunda propuesta de mejora consiste en implementar una selección de descuentos directamente en la interfaz de usuario al momento de realizar una venta, permitiendo elegir entre distintos porcentajes de descuento según el vendedor. Además, el sistema mostrará de forma explícita el monto ahorrado gracias al descuento aplicado, lo que hace el cálculo más transparente tanto para el usuario del sistema como para el cliente. Con esta mejora, el sistema de ventas se vuelve más claro para el cliente y para el vendedor.
+
+### *Mejora 3:* <br><br>
 
 
-### *Mejora 2:*
+### *Mejora 4:* <br><br>
 
 
-### *Mejora 3:*
+## [+] Mejoras Implementadas
+
+### *Implementación 1:* <br><br>
+Para integrar ambas mejoras en el proceso de venta *el cálculo del IVA* y *la aplicación de descuentos* se realizaron modificaciones en el mismo apartado del sistema encargado de gestionar los totales de cada compra. La implementación comenzó incorporando nuevos atribustos al objeto sales, ya que aqui se guardan los atributos de cada venta. <br>
+Los atributos a agregar son:
+  + Discount
+  + Iva
+  + Subtotal
+Para poder saber cuanto fue el impuesto, el descuento, y el subtotal (total sin iva ni descuento)<br>
+Como queremos que los datos sean persistentes, primero agregamos las nuevas tablas a la base de datos.
+```sql
+ALTER TABLE sales
+    ADD COLUMN subtotal DOUBLE NOT NULL DEFAULT 0,
+    ADD COLUMN iva DOUBLE NOT NULL DEFAULT 0,
+    ADD COLUMN discount DOUBLE NOT NULL DEFAULT 0;
+```
+Una vez añadidos los atributos a la base de datos los agregamos al constructor de sales.
+
+```java
+public record Sales(int idSales, int idCustomer, int idSeller, String numberSales, LocalDate saleDate, Double subtotal,
+                    State state, double total, double iva, double discount) {
+    public enum State{ACTIVE,DISACTIVE};
+
+    public Sales(int idCustomer, int idSeller, String numberSales, LocalDate saleDate, Double subtotal, State state,
+                 double total, double iva, double discount) {
+        this(0, idCustomer, idSeller, numberSales, saleDate, subtotal, state, total, iva, discount);
+    }
+
+    public static Sales fromResultSet(ResultSet rs) throws SQLException {
+        int idSales = rs.getInt("idSales");
+        int idCustomer = rs.getInt("idCustomer");
+        int idSeller = rs.getInt("idSeller");
+        String numberSales = rs.getString("numberSales");
+        LocalDate saleDate = rs.getDate("saleDate").toLocalDate();
+        Double subtotal = rs.getDouble("subtotal");
+        State state = State.valueOf(rs.getString("state"));
+        //nuevos atributos
+        double total = rs.getDouble("amount");
+        double iva = rs.getDouble("iva");
+        double discount = rs.getDouble("discount");
+        //
+        return new Sales(idSales, idCustomer, idSeller, numberSales, saleDate, subtotal, state, total, iva, discount);
+    }
+}
+```
+Una vez añadido los atributos al objeto sales actualizamos la funcion de la clase <code>SalesDAO</code> llamada <code>SaveSale()</code> para guardar los nuevos atributos al generar una venta.
+```java
+ public boolean SaveSale(Sales sale){
+        String sql = "INSERT INTO sales (idCustomer,idSeller,numberSales,saleDate,amount,state, subtotal, iva, discount) " +
+                "values(?,?,?,?,?,?,?,?,?)";
+
+        try (Connection conn = DBConnection.connection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setInt(1,sale.idCustomer());
+            pstmt.setInt(2,sale.idSeller());
+            pstmt.setString(3,sale.numberSales());
+            pstmt.setDate(4, Date.valueOf(sale.saleDate()));
+            pstmt.setDouble(5,sale.subtotal()); //total con IVA y descuento
+            pstmt.setString(6,sale.state().name());
+            //nuevos atributos
+            pstmt.setDouble(7,sale.total());
+            pstmt.setDouble(8,sale.iva());
+            pstmt.setDouble(9,sale.discount());
+
+            int rows_affected = pstmt.executeUpdate();
+
+            if (rows_affected>0){
+                MenuController.setAlert(Alert.AlertType.CONFIRMATION, "Sale saved correctly");
+                return true;
+            }else{
+                MenuController.setAlert(Alert.AlertType.ERROR, "Error saving sale: ");
+                return false;
+            }
+
+        }catch (SQLException e){
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error saving sale: " + e.getMessage());
+            return false;
+        }
+
+    }
+```
+Ya que tenemos los atributos definidos en el constructor y listos para que se puedadn guardar en la base de datos, pasamos a la parte de generar una venta con estos nuevos atributos. <br>
+Esta lógica para controlar el Iva y el descuento y el calculo del subtotal lo hacemos desde el <code>GenerateSalesController</code> ya que aqui se lleva a cabo toda la lógica de la interfaz e interna de lo que debe de hacer sales.<br>
+
+primero definimos una variable constante para el iva.
+```java
+ private static final double IVA_RATE = 0.16;
+```
+y para el descuento, creamos un enum para seleccionar que descuento queremos.
+el enum creado se crea en el paquete <code>org.borghisales.salesysten.util</code>
+```java
+public enum DiscountRate {
+    CERO (1.00),
+    DIEZ (0.90),
+    QUINCE (0.85),
+    VEINTE (0.80),
+    CINCUENTA (0.50);
+
+    private final double rate;
+
+    DiscountRate(double rate){this.rate = rate;}
+    public double getRate(){return rate;}
+}
+```
+ahora ya tenemos una manera de asignar el descuento y de usar el iva para calcular los montos que necesitamos
 
 
-### *Mejora 4:*
 
 
+
+
+
+
+
+Una vez calculado el subtotal con descuento, se añadió el procesamiento del IVA utilizando una tasa fija establecida en el sistema. El impuesto se calcula automáticamente sobre el subtotal resultante y se muestra desglosado en la interfaz, junto con el total final que el cliente debe pagar.
+Para que se muestre desglosado en la interfaz, se utiliza el objeto ShoppingCart que es principalmente un objeto para la interfaz gráfica, las tablas que salen en el programa y le agregamos los calculos en el construtor
+
+
+
+
+
+En la interfaz de usuario también se realizaron ajustes: se agregó un componente de selección de descuento (ComboBox) para permitir elegir entre diferentes porcentajes, y se añadieron campos informativos que muestran dinámicamente el subtotal, el descuento aplicado, el monto ahorrado, el IVA y el total a pagar. Estos elementos se actualizan en tiempo real conforme el usuario modifica la cantidad de productos o selecciona un porcentaje de descuento.
+
+Con esta implementación conjunta, el sistema ahora ofrece un cálculo más completo, transparente y funcional, integrando tanto la gestión de impuestos como la flexibilidad de aplicar descuentos dentro de un mismo flujo de trabajo, mejorando la precisión y usabilidad del módulo de ventas.
+
+
+### *Implemenrtación 2:*
 
 
 
@@ -209,9 +326,16 @@ Log in and display all available UIs in a general way.
 Walk through the work you completed from point 2 to point 6.
 Upload: Choose a platform to upload your video (like YouTube or Vimeo) and paste the link in the README file under a special section for it.
 
+<a href="aqui va el link del video">
+  <img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Youtube">
+</a>
 
 
 
+
+
+
+💻🎯🔒📗📚📈🧷☢️
 
 
 
