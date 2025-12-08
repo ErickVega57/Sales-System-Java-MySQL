@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="596.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.GenerateSaleController">
+<AnchorPane prefHeight="596.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.GenerateSaleController">
    <AnchorPane prefHeight="596.0" prefWidth="590.0">
       <Label layoutX="216.0" layoutY="11.0" prefHeight="39.0" prefWidth="279.0" text="PUNTO DE VENTA &quot;BORGHI SYSTEM&quot;" underline="true">
          <font>
@@ -63,6 +63,9 @@
       <Label layoutX="347.0" layoutY="238.0" text="EXISTENCIAS:" wrapText="true" />
       <Label layoutX="347.0" layoutY="273.0" text="VENDEDOR:" wrapText="true" />
       <Label layoutX="380.0" layoutY="565.0" text="VENTA TOTAL" wrapText="true" />
-      <TextField fx:id="date" editable="false" layoutX="251.0" layoutY="270.0" prefHeight="25.0" prefWidth="80.0" />
+       <CheckBox fx:id="chkEnvioExpres" layoutX="360.0" layoutY="610.0" text="Envio expres" />
+       <TextField fx:id="textFieldEnvio" editable="false" layoutX="480.0" layoutY="610.0" prefWidth="80.0"/>
+       <TextField fx:id="date" editable="false" layoutX="251.0" layoutY="270.0" prefHeight="25.0" prefWidth="80.0" />
+      <ButtonBar layoutX="134.0" layoutY="131.0" prefHeight="40.0" prefWidth="200.0" />
    </AnchorPane>
 </AnchorPane>
