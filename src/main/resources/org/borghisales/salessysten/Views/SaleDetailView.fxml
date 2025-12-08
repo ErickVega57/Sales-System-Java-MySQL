@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="534.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.SaleDetailController">
+<AnchorPane minHeight="534.0" minWidth="799.0" prefHeight="534.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.borghisales.salessysten.controllers.SaleDetailController">
    <children>
-      <TableView fx:id="tableSale" prefHeight="496.0" prefWidth="799.0">
+      <TableView fx:id="tableSale" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="799.0">
          <columns>
             <TableColumn fx:id="colNro" prefWidth="70.0" sortable="false" style="-fx-alignment: CENTER;" text="N°" />
             <TableColumn fx:id="colCod" prefWidth="73.0" sortable="false" style="-fx-alignment: CENTER;" text="COD" />
