@@ -53,15 +53,15 @@ public class SalesDAO {
             int rows_affected = pstmt.executeUpdate();
 
             if (rows_affected>0){
-                MenuController.setAlert(Alert.AlertType.CONFIRMATION, "Sale saved correctly");
+                MenuController.setAlert(Alert.AlertType.CONFIRMATION, "Venta guardada correctamente");
                 return true;
             }else{
-                MenuController.setAlert(Alert.AlertType.ERROR, "Error saving sale: ");
+                MenuController.setAlert(Alert.AlertType.ERROR, "Error guardando venta: ");
                 return false;
             }
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error saving sale: " + e.getMessage());
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error guardando venta: " + e.getMessage());
             return false;
         }
 
@@ -88,7 +88,7 @@ public class SalesDAO {
 
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error saving sale details: " + e.getMessage());
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error guardando detalles: " + e.getMessage());
             return false;
         }
 
@@ -110,7 +110,7 @@ public class SalesDAO {
             }
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error searching sales : " + e.getMessage()+"aqui");
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error buscando ventas : " + e.getMessage());
         }
 
 
@@ -148,7 +148,7 @@ public class SalesDAO {
 
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error buscando sales : " + e.getMessage());
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error buscando ventas : " + e.getMessage());
         }
     }
 
@@ -174,7 +174,7 @@ public class SalesDAO {
             }
 
         }catch (SQLException e){
-            MenuController.setAlert(Alert.AlertType.ERROR, "Error buscando sales : " + e.getMessage() + "detalles");
+            MenuController.setAlert(Alert.AlertType.ERROR, "Error buscando ventas : " + e.getMessage() );
         }
 
     }

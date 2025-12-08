@@ -334,7 +334,6 @@ public class GenerateSaleController extends MenuController implements Initializa
     }
 
     private ShoppingCart createShoppingCartObject() {
-
         return new ShoppingCart(contProducts++, codProduct.getText(),
                 productName.getText(), quantity.getValue(),
                 Double.parseDouble(price.getText()), getDiscountRate(),IVA_RATE);
@@ -347,6 +346,7 @@ public class GenerateSaleController extends MenuController implements Initializa
     private void addToCartAndUpdateTotals(ShoppingCart product) {
         products.add(product);
         tableSale.setItems(products);
+        // actualizar totales
         double currentSubTotal = Double.parseDouble(subtotal.getText()) + product.subtotal();
         subtotal.setText(String.format("%.2f", currentSubTotal));
         double currentTotal = Double.parseDouble(total.getText()) + product.total();

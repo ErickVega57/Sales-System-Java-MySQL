@@ -182,5 +182,4 @@ ALTER TABLE sales
     ADD COLUMN discount DOUBLE NOT NULL DEFAULT 0;
 
 
-
 -- Se deben de agregar las columnas a la base de datos
