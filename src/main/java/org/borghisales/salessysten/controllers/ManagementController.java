@@ -60,15 +60,10 @@ public class ManagementController extends MenuController implements Initializabl
         closeCurrentStage(sellerButton);
 
     }
-
-    public void help(ActionEvent actionEvent) {
-        try {
-            Desktop.getDesktop().browse(new URI("https://github.com/Borghii/Sales-System"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            setAlert(Alert.AlertType.ERROR,"The URL could not be opened. Check your internet connection.");
-        }
-
+//Pestaña de ayuda
+    public void openHelp(ActionEvent actionEvent) {
+        openNewStage(HELP_VIEW_FXML,"Ayuda");
+        closeCurrentStage(sellerButton);
     }
 
     public void exit(ActionEvent actionEvent) {
