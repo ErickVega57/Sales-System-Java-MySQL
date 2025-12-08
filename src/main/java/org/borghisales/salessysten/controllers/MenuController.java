@@ -16,7 +16,7 @@ public class MenuController extends ViewFiles {
 
 
     static Alert defaultAlert;
-    static ButtonType acceptButton = new ButtonType("Accept");
+    static ButtonType acceptButton = new ButtonType("Aceptar");
     public static HashMap<String, String > filePaths = new HashMap<>();
 
     void closeCurrentStage(Node node) {
@@ -42,6 +42,7 @@ public class MenuController extends ViewFiles {
             //
             configureStageCloseEvent(stage, fxmlFileName);
             stage.show();
+
 
         } catch (IOException | NullPointerException e) {
             setAlert(Alert.AlertType.WARNING, "Error al cargar la vista: "+ e.getMessage());

@@ -52,6 +52,8 @@ public class GenerateSaleController extends MenuController implements Initializa
     private final ObservableList<DiscountRate> discountList = FXCollections.observableArrayList(DiscountRate.CERO, DiscountRate.DIEZ,
             DiscountRate.QUINCE, DiscountRate.VEINTE, DiscountRate.CINCUENTA);
 
+    private double finalPrice=0.0;
+
     @FXML
     private TextField serial;
     @FXML
@@ -282,9 +284,8 @@ public class GenerateSaleController extends MenuController implements Initializa
 
         //idCustomer, idSeller, numberSales, saleDate, subtotal, state, total, ivaRate, saving)
         return new Sales(customer.idCustomer(), idSeller, serial.getText(),
-                LocalDate.parse(date.getText()), Double.parseDouble(subtotal.getText()),Sales.State.ACTIVE, Double.parseDouble(total.getText()),
-                Double.parseDouble(iva.getText()), Double.parseDouble(saving.getText()) );
-
+                LocalDate.parse(date.getText()), finalPrice,
+                Sales.State.ACTIVE);
     }
 
     private boolean saveSaleAndDetails(Sales sales) {
@@ -346,13 +347,8 @@ public class GenerateSaleController extends MenuController implements Initializa
     private void addToCartAndUpdateTotals(ShoppingCart product) {
         products.add(product);
         tableSale.setItems(products);
-        // actualizar totales
-        double currentSubTotal = Double.parseDouble(subtotal.getText()) + product.subtotal();
-        subtotal.setText(String.format("%.2f", currentSubTotal));
-        double currentTotal = Double.parseDouble(total.getText()) + product.total();
-        total.setText(String.format("%.2f", currentTotal));
-        iva.setText(String.format("%.2f", currentSubTotal*IVA_RATE));
-        saving.setText(String.format("%.2f",currentSubTotal*(1+IVA_RATE) - currentTotal));
+        finalPrice += product.total();
+        total.setText(String.format("%.2f", finalPrice));
     }
 
 
