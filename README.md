@@ -467,7 +467,7 @@ public class VentaConEnvio {
     }
 }
 ```
-Ademas dentro de la clase GenerateSaleController se implementaron funcionalidades para que sea visible el cambien la interfaz de generar ventas y se agrego un checkbox y un textfield al GenerateSaleVeiw para que se refleje claramente en la interfaz el precio segun se seleccione o no el envio expres
+Ademas dentro de la clase GenerateSaleController se implementaron funcionalidades para que sea visible el cambio en la interfaz de generar ventas y se agrego un checkbox y un textfield al GenerateSaleVeiw para que se refleje claramente en la interfaz el precio segun se seleccione o no el envio expres
 
 
 
