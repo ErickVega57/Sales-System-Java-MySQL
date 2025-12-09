@@ -28,7 +28,7 @@
     <!-- Descripción / contenido -->
     <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
         <content>
-            <TextArea fx:id="txtContent"
+            <TextArea fx:id="helpText"
                       editable="false"
                       wrapText="true"
                       style="-fx-control-inner-background: #ffffff;

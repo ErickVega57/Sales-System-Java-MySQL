@@ -11,7 +11,7 @@ import org.borghisales.salessysten.model.SellerDAO;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelpController implements Initializable {
+public class HelpController extends MenuController implements Initializable {
 
     @FXML
     private TextArea helpText;
@@ -25,11 +25,13 @@ public class HelpController implements Initializable {
                 """;
         helpText.setText(texto);
     }
-    public void onClose(){
+    public void onClose() {
+        System.out.println("Cerrando ventana de ayuda");
+        Stage stage = (Stage) helpText.getScene().getWindow();
+        stage.close();
+        openNewStage(MANAGEMENT_VIEW_FXML,"Menú principal");
     }
-
-
-
-
 }
+
+
 
