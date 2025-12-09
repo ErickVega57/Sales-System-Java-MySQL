@@ -440,11 +440,31 @@ public class EnvioExpres extends Envio {
     }
 }
 ```
-Estas sirvieron como una clase Envio abstracta general de la que heredan la otras 2 y calcula el total de la venta con envio.
+Estas sirvieron como una clase Envio abstracta general de la que heredan la otras 2 y calcula el total de la venta con envio.<br>
+
 <img width="219" height="121" alt="imagen" src="https://github.com/user-attachments/assets/3c181667-53ab-4587-a7fe-f2356a8342d4" />
 
+Tambien se creo una clase que calcula la venta con el envio para ver el costo final.
+```java
+package org.borghisales.salessysten.model;
 
+import org.borghisales.salessysten.model.envio.Envio;
 
+public class VentaConEnvio {
+    private final Sales venta;
+    private final Envio envio;
+
+    public VentaConEnvio(Sales venta, Envio envio) {
+        this.venta = venta;
+        this.envio = envio;
+    }
+
+    public double calcularTotal() {
+        return venta.amount() + envio.calcularCosto();
+    }
+}
+```
+Ademas dentro de la clase GenerateSaleController se implementaron funcionalidades para que sea visible el cambien la interfaz de generar ventas y se agrego un checkbox y un textfield al GenerateSaleVeiw para que se refleje claramente en la interfaz el precio segun se seleccione o no el envio expres
 ## [+] Video Presentación
 Action: Record a video showcasing your project.
 How to Do It:
