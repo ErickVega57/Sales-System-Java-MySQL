@@ -30,7 +30,10 @@
 #  
 <!-- TOC -->
 ## [+] Descripción del Proyecto
-
+Matricula: 24216391
+Nombre: Oscar de la Rosa Garcia
+Usuario de git: Lightz18
+Yo me encargue de la traduccion de la interfaz visible para los usuarios y ajuste los elemntos de estas para mayor organizacion y resultara mas comodo de emplear para el usuario. Ademas agregue un fondo y detalles a la interfaz de inicio para que fuera mas amigable. Corregi el bug del cambio de comas por puntos y repare el boton de AYUDA y le cree una interfaz con su controlador. Propuse las mejoras de stockMinimo y la de Envio, e implemente la de Envio donde cree 4 clases donde 3 de estas pertenecian a un package envio y la otra si se encontraba en model y tambien corregi errores detectados en esta mas adelante. Participe en la elaboracion del video donde se muestra la funcionalidad del sistema
 
 
 
