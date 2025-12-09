@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="src/main/resources/images/shopping cart.png" />
+  <img src="src/main/resources/images/GENERADORCOMPRAS.png" />
 </p>
 
 #
