@@ -14,6 +14,10 @@ import javafx.stage.Stage;
 import org.borghisales.salessysten.model.*;
 import org.borghisales.salessysten.util.DiscountRate;
 import org.borghisales.salessysten.util.ViewFiles;
+import org.borghisales.salessysten.model.envio.Envio;
+import org.borghisales.salessysten.model.envio.EnvioExpres;
+import org.borghisales.salessysten.model.envio.EnvioEconomico;
+
 
 
 import java.net.URL;
@@ -51,6 +55,8 @@ public class GenerateSaleController extends MenuController implements Initializa
     //cbox
     private final ObservableList<DiscountRate> discountList = FXCollections.observableArrayList(DiscountRate.CERO, DiscountRate.DIEZ,
             DiscountRate.QUINCE, DiscountRate.VEINTE, DiscountRate.CINCUENTA);
+
+    private double finalPrice=0.0;
 
     @FXML
     private TextField serial;
@@ -104,6 +110,26 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     //static final para el IVA
     private static final double IVA_RATE = 0.16;
+
+    @FXML
+    private CheckBox chkEnvioExpres;
+
+    @FXML
+    private CheckBox checkBoxExpres;
+
+    @FXML
+    private Label labelTotal;
+
+    @FXML
+    private Label labelEnvio;
+
+    @FXML
+    private TextField amount;
+
+    @FXML
+    private TextField textFieldEnvio;
+
+    private Sales ventaSeleccionada;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeUIElements();
@@ -265,7 +291,18 @@ public class GenerateSaleController extends MenuController implements Initializa
             return;
         }
 
+        // 1) Crear objeto Sales (sin envío)
         Sales sales = createSalesObject();
+
+        this.ventaSeleccionada = sales;
+
+        // 2) Agregar envío
+        Envio envio = obtenerEnvio();  // ← aquí decides el tipo
+        VentaConEnvio vc = new VentaConEnvio(sales, envio);
+        double totalConEnvio = vc.calcularTotal();
+
+        textFieldEnvio.setText(String.format("%.2f", envio.calcularCosto()));
+        total.setText(String.format("%.2f", totalConEnvio));
 
         if (saveSaleAndDetails(sales)) {
             productDAO.subtractStock(products);
@@ -275,6 +312,12 @@ public class GenerateSaleController extends MenuController implements Initializa
             products.clear();
             updateReportsController();
         }
+
+
+
+// Muestra el total al usuario
+        total.setText(String.valueOf(totalConEnvio));
+
     }
 
     // modificar para crear objeto de sales
@@ -376,6 +419,52 @@ public class GenerateSaleController extends MenuController implements Initializa
     private double getDiscountRate(){
         DiscountRate dis = cbDiscount.getValue();
         return dis.getRate();
+    }
+     
+    private Envio obtenerEnvio() {
+        if (chkEnvioExpres.isSelected()) {
+            return new EnvioExpres();
+        }
+        return new EnvioEconomico();
+    }
+
+    private void calcularTotalVenta() {
+        Envio envio;
+
+        if (checkBoxExpres.isSelected()) {
+            envio = new EnvioExpres();
+        } else {
+            envio = new EnvioEconomico();
+        }
+
+        VentaConEnvio ventaConEnvio = new VentaConEnvio(ventaSeleccionada, envio);
+
+        labelEnvio.setText(String.format("Costo de envío: $%.2f", envio.calcularCosto()));
+
+        labelTotal.setText(String.format("Total: $%.2f", ventaConEnvio.calcularTotal()));
+    }
+
+    public void setVentaSeleccionada(Sales venta) {
+        this.ventaSeleccionada = venta;
+
+        // Inicializar valores
+        actualizarMontos();
+
+        // Escuchar cambios en el CheckBox para actualizar dinámicamente
+        chkEnvioExpres.selectedProperty().addListener((observable, oldValue, newValue) -> actualizarMontos());
+    }
+
+    private void actualizarMontos() {
+        if (ventaSeleccionada == null) return;
+
+        Envio envio = chkEnvioExpres.isSelected() ? new EnvioExpres() : new EnvioEconomico();
+        VentaConEnvio ventaConEnvio = new VentaConEnvio(ventaSeleccionada, envio);
+
+        // Mostrar monto del envío en el TextField
+        textFieldEnvio.setText(String.format("%.2f", envio.calcularCosto()));
+
+        // Mostrar total venta + envío
+        total.setText(String.format("%.2f", ventaConEnvio.calcularTotal()));
     }
 
 }
