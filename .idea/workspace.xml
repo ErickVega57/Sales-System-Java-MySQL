@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d68daa5-a641-41ea-b0ee-75849b91ef2e" name="Changes" comment="Cambios en instrucciones de base de datos">
+    <list default="true" id="5d68daa5-a641-41ea-b0ee-75849b91ef2e" name="Changes" comment="Cambios en constructor, funciones para calcular el total,subtotal, monto de descuento e iva y redondear.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/controllers/GenerateSaleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/controllers/GenerateSaleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/model/ShoppingCart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/model/ShoppingCart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/model/VentaConEnvio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/model/VentaConEnvio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/util/DiscountRate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/util/DiscountRate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/borghisales/salessysten/Views/GenerateSaleView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/borghisales/salessysten/Views/GenerateSaleView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/borghisales/salessysten/Views/ManagementView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/borghisales/salessysten/Views/ManagementView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/borghisales/salessysten/controllers/MainController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -455,7 +451,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765092011030</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Cambios en constructor, funciones para calcular el total,subtotal, monto de descuento e iva y redondear.">
+      <option name="closed" value="true" />
+      <created>1765249453225</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1765249453225</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -470,7 +474,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fea: add table" />
     <MESSAGE value="fea: add show table" />
     <MESSAGE value="fea: add DAO products" />
     <MESSAGE value="fea: add FML CustomerView.fxml" />
@@ -495,6 +498,7 @@
     <MESSAGE value="refactor: cleaning code" />
     <MESSAGE value="refactor: delete comments" />
     <MESSAGE value="Cambios en instrucciones de base de datos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cambios en instrucciones de base de datos" />
+    <MESSAGE value="Cambios en constructor, funciones para calcular el total,subtotal, monto de descuento e iva y redondear." />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambios en constructor, funciones para calcular el total,subtotal, monto de descuento e iva y redondear." />
   </component>
 </project>

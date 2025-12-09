@@ -139,6 +139,13 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private void initializeUIElements() {
         total.setText("0.0");
+        //atributos nuevos
+        subtotal.setText("0.0");
+        saving.setText("0.0");
+        iva.setText("0.0");
+        //envio
+
+
         setSerial();
         seller.setText(sellerName);
         date.setText(String.valueOf(now));
@@ -206,19 +213,7 @@ public class GenerateSaleController extends MenuController implements Initializa
     private void openCustomerManagementView() {
         //utilizamos la clase Tab Controller
         TabController.openNewTab(CUSTOMER_VIEW_FXML);
-        //FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource(CUSTOMER_VIEW_FXML));
-        //try {
-           // scene = new Scene(fxmlLoader.load());
-        //} catch (IOException e) {
-          //  throw new RuntimeException(e);
-        //}
-
-        //stage = new Stage();
-        //stage.setTitle("Manage Customer");
-        //stage.setScene(scene);
-       // stage.show();
     }
-
 
     public void searchProduct(ActionEvent actionEvent) {
         int productId = Integer.parseInt(codProduct.getText());
@@ -251,16 +246,18 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private void openProductManagementView() {
         TabController.openNewTab(ViewFiles.PRODUCT_VIEW_FXML);
-
     }
 
     public void cancel(ActionEvent actionEvent) {
         if (products.isEmpty())return;
-        MenuController.cleanCells(codCustomer,codProduct,customerName,productName,price,stock,subtotal,iva);
+        MenuController.cleanCells(codCustomer,codProduct,customerName,productName,price,stock);
         quantity.getValueFactory().setValue(null);
         tableSale.getItems().clear();
 
         //borrar nuevos atributos
+        subtotal.setText("0.0");
+        saving.setText("0.0");
+        iva.setText("0.0");
         cbDiscount.setValue(DiscountRate.CERO);
         //
         MenuController.setAlert(Alert.AlertType.INFORMATION,"Sale Canceled");
@@ -294,11 +291,8 @@ public class GenerateSaleController extends MenuController implements Initializa
             updateReportsController();
         }
 
-
-
 // Muestra el total al usuario
         total.setText(String.valueOf(totalConEnvio));
-
     }
 
     // modificar para crear objeto de sales
@@ -321,6 +315,9 @@ public class GenerateSaleController extends MenuController implements Initializa
         MenuController.cleanCells(codCustomer, codProduct, customerName, productName, price, stock);
         quantity.getValueFactory().setValue(null);
         tableSale.getItems().clear();
+        subtotal.setText("0.0");
+        saving.setText("0.0");
+        iva.setText("0.0");
     }
 
     private void updateReportsController() {
@@ -360,9 +357,8 @@ public class GenerateSaleController extends MenuController implements Initializa
     private ShoppingCart createShoppingCartObject() {
         return new ShoppingCart(contProducts++, codProduct.getText(),
                 productName.getText(), quantity.getValue(),
-                Double.parseDouble(price.getText()), getDiscountRate(),CalcSubtotal()*IVA_RATE, CalcSubtotal(), CalcTotal());
+                Double.parseDouble(price.getText()), CalcSaving(),CalcSubtotal()*IVA_RATE, CalcSubtotal(), CalcTotal());
     }
-
 
     private double CalcSubtotal (){
         double subtotal = quantity.getValue() * Double.parseDouble(price.getText());
@@ -399,7 +395,7 @@ public class GenerateSaleController extends MenuController implements Initializa
         subtotal.setText(String.format("%.2f", currentSubTotal));
         double currentTotal = Double.parseDouble(total.getText()) + product.total();
 
-        total.setText(String.format("%.2f", currentTotal ));
+        total.setText(String.format("%.2f", currentTotal )); //campo total de todas las ventas
         iva.setText(String.format("%.2f", currentSubTotal * IVA_RATE));
         saving.setText(String.format("%.2f", CalcSaving()));
     }
@@ -439,7 +435,6 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private void calcularTotalVenta() {
         Envio envio;
-
         if (checkBoxExpres.isSelected()) {
             envio = new EnvioExpres();
         } else {
