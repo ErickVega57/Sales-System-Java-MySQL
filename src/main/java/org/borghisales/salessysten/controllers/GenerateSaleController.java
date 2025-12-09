@@ -143,6 +143,9 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private void initializeUIElements() {
         total.setText("0.0");
+        saving.setText("0.0");
+        subtotal.setText("0.0");
+        iva.setText("0.0");
         // inicializar costo de envío según el checkbox
         textFieldEnvio.setText(String.format("%.2f", getShippingCost()));
 
@@ -155,10 +158,10 @@ public class GenerateSaleController extends MenuController implements Initializa
         seller.setText(sellerName);
         date.setText(String.valueOf(now));
         initializeComboBox();
+
     }
 
-    private void initializeComboBox() {
-    }
+
 
     private void initializeComboBox() {
         cbDiscount.setValue(DiscountRate.CERO);
@@ -295,14 +298,7 @@ public class GenerateSaleController extends MenuController implements Initializa
             total.setText(String.format("%.2f", totalConEnvio));
 
             // crear objeto Sales con total FINAL
-            Sales sale = new Sales(
-                    customer.idCustomer(),
-                    idSeller,
-                    serial.getText(),
-                    LocalDate.parse(date.getText()),
-                    totalConEnvio,
-                    Sales.State.ACTIVE
-            );
+            Sales sale = createSalesObject();
 
             this.ventaSeleccionada = sale;
 
