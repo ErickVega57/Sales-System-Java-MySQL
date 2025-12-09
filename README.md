@@ -393,7 +393,55 @@ Con esta implementación conjunta, el sistema ahora ofrece un cálculo más comp
 
 
 ### *Implemenrtación 2:* <br><br>
-Se implementó un 
+Se agrego un precio de envio visible para el usuario. Para esto se creo un package "envio" con 3 clases dentro de model:
+-Envio:
+```java
+package org.borghisales.salessysten.model.envio;
+
+public abstract class Envio {
+    protected double costoBase;
+
+    public Envio(double costoBase) {
+        this.costoBase = costoBase;
+    }
+
+    public abstract double calcularCosto();
+}
+```
+-EnvioEconomico:
+```java
+package org.borghisales.salessysten.model.envio;
+
+public class EnvioEconomico extends Envio {
+
+    public EnvioEconomico() {
+        super(80);
+    }
+
+    @Override
+    public double calcularCosto() {
+        return costoBase;
+    }
+}
+```
+-EnvioExpres:
+```java
+package org.borghisales.salessysten.model.envio;
+
+public class EnvioExpres extends Envio {
+
+    public EnvioExpres() {
+        super(150);
+    }
+
+    @Override
+    public double calcularCosto() {
+        return costoBase;
+    }
+}
+```
+Estas sirvieron como una clase Envio abstracta general de la que heredan la otras 2 y calcula el total de la venta con envio.
+<img width="219" height="121" alt="imagen" src="https://github.com/user-attachments/assets/3c181667-53ab-4587-a7fe-f2356a8342d4" />
 
 
 
