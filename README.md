@@ -156,6 +156,88 @@ La Clase implementada fue <code>TabController</code> que aisla la lógica de est
 ```
 Ahora el título de la ventana obtiene el nombre correcto con el que se debería de mostrar.
 ### *Error 3:*
+Probelama con la funcionalidad del boton AYUDA.<br><br>
+**Motivo del problema**<br><br>
+Al seleccionar el boton AYUDA el sistema se bloqueaba, no respondia y al cabo de un rato dejaba de funcionar.<br>
+```java
+public void help(ActionEvent actionEvent) {
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/Borghii/Sales-System"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            setAlert(Alert.AlertType.ERROR,"The URL could not be opened. Check your internet connection.");
+        }
+```
+**Solución**<br><br>
+Se modifico la funcion del ManagementController.<br>
+```java
+public void help(ActionEvent actionEvent) {
+        lastTab = tabPaneManage.getSelectionModel().getSelectedIndex();
+        openNewStage(HELP_DETAIL_VIEW_FXML,"Ayuda");
+```
+Ademas se agrego una interfaz que muestra detalles del sistema.<br>
+```java
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.borghisales.salessysten.controllers.HelpController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <!-- Título de la ventana -->
+    <Label layoutX="150.0" layoutY="10.0" prefWidth="300.0" prefHeight="40.0"
+           text="AYUDA" underline="true" alignment="CENTER">
+        <font>
+            <Font size="28.0"/>
+        </font>
+    </Label>
+
+    <!-- Área de texto con instrucciones -->
+    <TextArea fx:id="textAreaHelp" layoutX="50.0" layoutY="70.0" prefWidth="500.0" prefHeight="250.0"
+              editable="false" wrapText="true">
+        <text>
+            Bienvenido al sistema Borghi Sales System.
+
+            Aquí puedes:
+            - Registrar ventas.
+            - Gestionar clientes.
+            - Agregar productos al carrito.
+            - Seleccionar opciones de envío y calcular el total.
+
+            Para más información sobre el sistema, puedes consultar el repositorio en GitHub.
+        </text>
+    </TextArea>
+
+    <!-- Botón para cerrar la ventana -->
+    <Button layoutX="250.0" layoutY="340.0" prefWidth="100.0" text="Cerrar" onAction="#closeWindow"/>
+
+</AnchorPane>
+```
+Tambien se agrego un HelpController para el contenido de esta.<br>
+```java
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Aquí se puede inicializar texto por defecto si se desea
+        if (textAreaHelp != null && textAreaHelp.getText().isEmpty()) {
+            textAreaHelp.setText(
+                    "Bienvenido al sistema Borghi Sales System.\n\n" +
+                            "- Registrar ventas.\n" +
+                            "- Gestionar clientes.\n" +
+                            "- Agregar productos al carrito.\n" +
+                            "- Seleccionar opciones de envío y calcular el total.\n\n" +
+                            "Para más información sobre el sistema, consulta el repositorio en GitHub."
+            );
+        }
+    }
+     @FXML
+      private void closeWindow(ActionEvent event) {
+          Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+          stage.close();
+      }
+```
 
 
 
@@ -178,10 +260,13 @@ La primera propuesta de mejora consiste en implementar el cálculo del IVA en ca
 La segunda propuesta de mejora consiste en implementar una selección de descuentos directamente en la interfaz de usuario al momento de realizar una venta, permitiendo elegir entre distintos porcentajes de descuento según el vendedor. Además, el sistema mostrará de forma explícita el monto ahorrado gracias al descuento aplicado, lo que hace el cálculo más transparente tanto para el usuario del sistema como para el cliente. Con esta mejora, el sistema de ventas se vuelve más claro para el cliente y para el vendedor.
 
 ### *Mejora 3:* <br><br>
-
-
+La tercera propuesta consiste en implementar la funcionalidad de envío de productos en cada venta, y cálculo total de la venta con envio , permitiendo que el sistema distinga entre envío estándar y envío exprés, mostrando el costo correspondiente y sumándolo automáticamente al total de la venta. Esto permitirá reflejar de manera más realista los montos finales y ofrecer al cliente opciones de envío según sus necesidades.<br>
+### *Relacion con la POO:* <br><br>
+La implementación del módulo de envío en el sistema aplica directamente los principios de la Programación Orientada a Objetos, ya que se crea una clase abstracta como base para los tipos de envio que definira el comportamiento general de el resto, y a partir de esta se crean clase concretas como extends, y aqui vemos el principio de herencia para extender un comportamiento en comun y polimorfismo cuando usas un metodo para calcular el envio segun el tipo de envio seleccionado                                      
 ### *Mejora 4:* <br><br>
-
+La cuarta propuesta consite en implementar una funcionalidad que detecte cuando el inventario de un producto esté por debajo de un umbral mínimo y notifique al usuario antes de completar la venta. Esto permite prevenir la venta de productos agotados o con stock insuficiente, asegurando una gestión más eficiente del inventario y mejorando la experiencia del cliente.<br>
+### *Relacion con la POO:* <br><br>
+Vemos reflejada la herencia ya que existe una clase general como es product que contiene atributos que todos los productos comparte como seria el stockminimo y el stockactual, donde las clases mas especificas lo herendan. El polimorfismo lo vemos cuando hay una sola funcion que revisa si el stock llego al minimo para cada tipo de producto
 
 ## [+] Mejoras Implementadas
 
@@ -310,7 +395,79 @@ En la interfaz de usuario también se realizaron ajustes: se agregó un componen
 Con esta implementación conjunta, el sistema ahora ofrece un cálculo más completo, transparente y funcional, integrando tanto la gestión de impuestos como la flexibilidad de aplicar descuentos dentro de un mismo flujo de trabajo, mejorando la precisión y usabilidad del módulo de ventas.
 
 
-### *Implemenrtación 2:*
+### *Implemenrtación 2:* <br><br>
+Se agrego un precio de envio visible para el usuario. Para esto se creo un package "envio" con 3 clases dentro de model:
+-Envio:
+```java
+package org.borghisales.salessysten.model.envio;
+
+public abstract class Envio {
+    protected double costoBase;
+
+    public Envio(double costoBase) {
+        this.costoBase = costoBase;
+    }
+
+    public abstract double calcularCosto();
+}
+```
+-EnvioEconomico:
+```java
+package org.borghisales.salessysten.model.envio;
+
+public class EnvioEconomico extends Envio {
+
+    public EnvioEconomico() {
+        super(80);
+    }
+
+    @Override
+    public double calcularCosto() {
+        return costoBase;
+    }
+}
+```
+-EnvioExpres:
+```java
+package org.borghisales.salessysten.model.envio;
+
+public class EnvioExpres extends Envio {
+
+    public EnvioExpres() {
+        super(150);
+    }
+
+    @Override
+    public double calcularCosto() {
+        return costoBase;
+    }
+}
+```
+Estas sirvieron como una clase Envio abstracta general de la que heredan la otras 2 y calcula el total de la venta con envio.<br>
+
+<img width="219" height="121" alt="imagen" src="https://github.com/user-attachments/assets/3c181667-53ab-4587-a7fe-f2356a8342d4" />
+
+Tambien se creo una clase que calcula la venta con el envio para ver el costo final.
+```java
+package org.borghisales.salessysten.model;
+
+import org.borghisales.salessysten.model.envio.Envio;
+
+public class VentaConEnvio {
+    private final Sales venta;
+    private final Envio envio;
+
+    public VentaConEnvio(Sales venta, Envio envio) {
+        this.venta = venta;
+        this.envio = envio;
+    }
+
+    public double calcularTotal() {
+        return venta.amount() + envio.calcularCosto();
+    }
+}
+```
+Ademas dentro de la clase GenerateSaleController se implementaron funcionalidades para que sea visible el cambien la interfaz de generar ventas y se agrego un checkbox y un textfield al GenerateSaleVeiw para que se refleje claramente en la interfaz el precio segun se seleccione o no el envio expres
 
 
 
