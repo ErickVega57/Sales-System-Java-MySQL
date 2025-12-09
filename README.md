@@ -257,10 +257,13 @@ La primera propuesta de mejora consiste en implementar el cálculo del IVA en ca
 La segunda propuesta de mejora consiste en implementar una selección de descuentos directamente en la interfaz de usuario al momento de realizar una venta, permitiendo elegir entre distintos porcentajes de descuento según el vendedor. Además, el sistema mostrará de forma explícita el monto ahorrado gracias al descuento aplicado, lo que hace el cálculo más transparente tanto para el usuario del sistema como para el cliente. Con esta mejora, el sistema de ventas se vuelve más claro para el cliente y para el vendedor.
 
 ### *Mejora 3:* <br><br>
-La tercera propuesta consiste en implementar la funcionalidad de envío de productos en cada venta, y cálculo total de la venta con envio , permitiendo que el sistema distinga entre envío estándar y envío exprés, mostrando el costo correspondiente y sumándolo automáticamente al total de la venta. Esto permitirá reflejar de manera más realista los montos finales y ofrecer al cliente opciones de envío según sus necesidades.
-
+La tercera propuesta consiste en implementar la funcionalidad de envío de productos en cada venta, y cálculo total de la venta con envio , permitiendo que el sistema distinga entre envío estándar y envío exprés, mostrando el costo correspondiente y sumándolo automáticamente al total de la venta. Esto permitirá reflejar de manera más realista los montos finales y ofrecer al cliente opciones de envío según sus necesidades.<br>
+### *Relacion con la POO:* <br><br>
+La implementación del módulo de envío en el sistema aplica directamente los principios de la Programación Orientada a Objetos, ya que se crea una clase abstracta como base para los tipos de envio que definira el comportamiento general de el resto, y a partir de esta se crean clase concretas como extends, y aqui vemos el principio de herencia para extender un comportamiento en comun y polimorfismo cuando usas un metodo para calcular el envio segun el tipo de envio seleccionado                                      
 ### *Mejora 4:* <br><br>
-La cuarta propuesta consite en implementar una funcionalidad que detecte cuando el inventario de un producto esté por debajo de un umbral mínimo y notifique al usuario antes de completar la venta. Esto permite prevenir la venta de productos agotados o con stock insuficiente, asegurando una gestión más eficiente del inventario y mejorando la experiencia del cliente.
+La cuarta propuesta consite en implementar una funcionalidad que detecte cuando el inventario de un producto esté por debajo de un umbral mínimo y notifique al usuario antes de completar la venta. Esto permite prevenir la venta de productos agotados o con stock insuficiente, asegurando una gestión más eficiente del inventario y mejorando la experiencia del cliente.<br>
+### *Relacion con la POO:* <br><br>
+Vemos reflejada la herencia ya que existe una clase general como es product que contiene atributos que todos los productos comparte como seria el stockminimo y el stockactual, donde las clases mas especificas lo herendan. El polimorfismo lo vemos cuando hay una sola funcion que revisa si el stock llego al minimo para cada tipo de producto
 
 ## [+] Mejoras Implementadas
 
