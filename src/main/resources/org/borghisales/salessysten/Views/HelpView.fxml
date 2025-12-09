@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.borghisales.salessysten.controllers.HelpController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <!-- Título de la ventana -->
+    <Label layoutX="150.0" layoutY="10.0" prefWidth="300.0" prefHeight="40.0"
+           text="AYUDA" underline="true" alignment="CENTER">
+        <font>
+            <Font size="28.0"/>
+        </font>
+    </Label>
+
+    <!-- Área de texto con instrucciones -->
+    <TextArea fx:id="textAreaHelp" layoutX="50.0" layoutY="70.0" prefWidth="500.0" prefHeight="250.0"
+              editable="false" wrapText="true">
+        <text>
+            Bienvenido al sistema Borghi Sales System.
+
+            Aquí puedes:
+            - Registrar ventas.
+            - Gestionar clientes.
+            - Agregar productos al carrito.
+            - Seleccionar opciones de envío y calcular el total.
+
+            Para más información sobre el sistema, puedes consultar el repositorio en GitHub.
+        </text>
+    </TextArea>
+
+    <!-- Botón para cerrar la ventana -->
+    <Button layoutX="250.0" layoutY="340.0" prefWidth="100.0" text="Cerrar" onAction="#closeWindow"/>
+
+</AnchorPane>

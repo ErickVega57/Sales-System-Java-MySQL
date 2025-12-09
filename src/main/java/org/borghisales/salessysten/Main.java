@@ -19,6 +19,7 @@ public class Main extends Application {
         filePaths.put(CUSTOMER_VIEW_FXML, MANAGEMENT_VIEW_FXML);
         filePaths.put(GENERATE_SALE_VIEW_FXML, MANAGEMENT_VIEW_FXML);
         filePaths.put(REPORT_VIEW_FXML, MANAGEMENT_VIEW_FXML);
+        filePaths.put(HELP_DETAIL_VIEW_FXML, MANAGEMENT_VIEW_FXML);
     }
 
     @Override
