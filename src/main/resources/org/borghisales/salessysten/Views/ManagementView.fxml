@@ -13,7 +13,7 @@
                         <VBox minHeight="0.0" minWidth="0.0" prefHeight="342.0" prefWidth="525.0"
                               spacing="20" alignment="CENTER">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#help"
+                                <Button mnemonicParsing="false" onAction="#openHelp"
                                         prefHeight="70.0" prefWidth="160.0" text="AYUDA" />
                                 <Button mnemonicParsing="false" onAction="#exit"
                                         prefHeight="70.0" prefWidth="160.0" text="SALIR" />

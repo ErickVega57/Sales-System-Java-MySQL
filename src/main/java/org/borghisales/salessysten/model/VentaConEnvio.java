@@ -12,6 +12,6 @@ public class VentaConEnvio {
     }
 
     public double calcularTotal() {
-        return venta.amount() + envio.calcularCosto();
+        return venta.total() + envio.calcularCosto();
     }
 }

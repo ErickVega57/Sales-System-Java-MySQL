@@ -142,9 +142,6 @@ public class GenerateSaleController extends MenuController implements Initializa
         setSerial();
         seller.setText(sellerName);
         date.setText(String.valueOf(now));
-        // nuevos atributos
-        subtotal.setText("0.0");
-        iva.setText("0.0");
         initializeComboBox();
     }
 
@@ -254,33 +251,17 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private void openProductManagementView() {
         TabController.openNewTab(ViewFiles.PRODUCT_VIEW_FXML);
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getResource(PRODUCT_VIEW_FXML));
 
-        try {
-            scene = new Scene(fxmlLoader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        stage = new Stage();
-        stage.setTitle("Manage Product");
-        stage.setScene(scene);
-        stage.show();
-        */
     }
-
 
     public void cancel(ActionEvent actionEvent) {
         if (products.isEmpty())return;
-        MenuController.cleanCells(codCustomer,codProduct,customerName,productName,price,stock);
+        MenuController.cleanCells(codCustomer,codProduct,customerName,productName,price,stock,subtotal,iva);
         quantity.getValueFactory().setValue(null);
         tableSale.getItems().clear();
 
         //borrar nuevos atributos
-        subtotal.setText("0.0");
         cbDiscount.setValue(DiscountRate.CERO);
-        iva.setText("0.0");
         //
         MenuController.setAlert(Alert.AlertType.INFORMATION,"Sale Canceled");
         total.clear();
@@ -379,7 +360,31 @@ public class GenerateSaleController extends MenuController implements Initializa
     private ShoppingCart createShoppingCartObject() {
         return new ShoppingCart(contProducts++, codProduct.getText(),
                 productName.getText(), quantity.getValue(),
-                Double.parseDouble(price.getText()), getDiscountRate(),IVA_RATE);
+                Double.parseDouble(price.getText()), getDiscountRate(),CalcSubtotal()*IVA_RATE, CalcSubtotal(), CalcTotal());
+    }
+
+
+    private double CalcSubtotal (){
+        double subtotal = quantity.getValue() * Double.parseDouble(price.getText());
+        return Round(subtotal);
+    }
+    private double CalcTotal (){
+        double subtotal = CalcSubtotal();
+        double subtotalIva = subtotal * (1 + IVA_RATE);
+        double discountAmount = subtotalIva * getDiscountRate();
+        double total = subtotalIva - discountAmount;
+        return Round(total);
+    }
+    private double CalcSaving (){
+        double subtotal = CalcSubtotal();
+        double subtotalIva = subtotal * (1 + IVA_RATE);
+        double discountAmount = subtotalIva * getDiscountRate();
+        return discountAmount;
+    }
+    private double Round(double num){
+        String roundStr = String.format("%.2f",num);
+        double round = Double.parseDouble(roundStr);
+        return round;
     }
 
     private boolean isProductAlreadyInCart(ShoppingCart product) {
@@ -393,10 +398,14 @@ public class GenerateSaleController extends MenuController implements Initializa
         double currentSubTotal = Double.parseDouble(subtotal.getText()) + product.subtotal();
         subtotal.setText(String.format("%.2f", currentSubTotal));
         double currentTotal = Double.parseDouble(total.getText()) + product.total();
-        total.setText(String.format("%.2f", currentTotal));
-        iva.setText(String.format("%.2f", currentSubTotal*IVA_RATE));
-        saving.setText(String.format("%.2f",currentSubTotal*(1+IVA_RATE) - currentTotal));
+
+        total.setText(String.format("%.2f", currentTotal ));
+        iva.setText(String.format("%.2f", currentSubTotal * IVA_RATE));
+        saving.setText(String.format("%.2f", CalcSaving()));
     }
+
+
+
 
 
 
