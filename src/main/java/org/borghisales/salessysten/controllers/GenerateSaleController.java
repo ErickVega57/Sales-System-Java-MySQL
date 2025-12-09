@@ -131,6 +131,10 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private Sales ventaSeleccionada;
 
+       private double getShippingCost() {
+        return chkEnvioExpres.isSelected() ? 150.0 : 80.0;
+    }
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeUIElements();
         configureAlerts();
@@ -139,17 +143,21 @@ public class GenerateSaleController extends MenuController implements Initializa
 
     private void initializeUIElements() {
         total.setText("0.0");
-        //atributos nuevos
-        subtotal.setText("0.0");
-        saving.setText("0.0");
-        iva.setText("0.0");
-        //envio
+        // inicializar costo de envío según el checkbox
+        textFieldEnvio.setText(String.format("%.2f", getShippingCost()));
 
+        // si cambia el checkbox, actualizamos el costo de envío en el textfield
+        chkEnvioExpres.selectedProperty().addListener((obs, oldV, newV) -> {
+            textFieldEnvio.setText(String.format("%.2f", getShippingCost()));
+        });
 
         setSerial();
         seller.setText(sellerName);
         date.setText(String.valueOf(now));
         initializeComboBox();
+    }
+
+    private void initializeComboBox() {
     }
 
     private void initializeComboBox() {
@@ -248,51 +256,74 @@ public class GenerateSaleController extends MenuController implements Initializa
         TabController.openNewTab(ViewFiles.PRODUCT_VIEW_FXML);
     }
 
-    public void cancel(ActionEvent actionEvent) {
-        if (products.isEmpty())return;
+     public void cancel(ActionEvent actionEvent) {
+        if (products.isEmpty()) return;
+
         MenuController.cleanCells(codCustomer,codProduct,customerName,productName,price,stock);
         quantity.getValueFactory().setValue(null);
         tableSale.getItems().clear();
+        products.clear();
 
-        //borrar nuevos atributos
-        subtotal.setText("0.0");
-        saving.setText("0.0");
-        iva.setText("0.0");
-        cbDiscount.setValue(DiscountRate.CERO);
-        //
-        MenuController.setAlert(Alert.AlertType.INFORMATION,"Sale Canceled");
-        total.clear();
+        // reset envío
+        textFieldEnvio.setText(String.format("%.2f", getShippingCost()));
+
+        MenuController.setAlert(Alert.AlertType.INFORMATION,"Venta cancelada");
+        total.setText("0.0");
     }
 
     public void generateSale(ActionEvent actionEvent) {
         if (products.isEmpty()) {
+            MenuController.setAlert(Alert.AlertType.WARNING, "No hay productos en el carrito.");
             return;
         }
 
-        // 1) Crear objeto Sales (sin envío)
-        Sales sales = createSalesObject();
+        try {
+            // total sin envío (el que ya tienes)
+            double totalSinEnvio = Double.parseDouble(total.getText().replace(",", "."));
 
-        this.ventaSeleccionada = sales;
 
-        // 2) Agregar envío
-        Envio envio = obtenerEnvio();  // ← aquí decides el tipo
-        VentaConEnvio vc = new VentaConEnvio(sales, envio);
-        double totalConEnvio = vc.calcularTotal();
+            // costo de envío según el checkbox
+            double shippingCost = getShippingCost();
 
-        textFieldEnvio.setText(String.format("%.2f", envio.calcularCosto()));
-        total.setText(String.format("%.2f", totalConEnvio));
+            // mostrar envío al usuario
+            textFieldEnvio.setText(String.format("%.2f", shippingCost));
 
-        if (saveSaleAndDetails(sales)) {
-            productDAO.subtractStock(products);
-            cleanFieldsAndTable();
-            setSerial();
-            total.setText("0.0");
-            products.clear();
-            updateReportsController();
+            // total final con envío
+            double totalConEnvio = totalSinEnvio + shippingCost;
+
+            // mostrar total final
+            total.setText(String.format("%.2f", totalConEnvio));
+
+            // crear objeto Sales con total FINAL
+            Sales sale = new Sales(
+                    customer.idCustomer(),
+                    idSeller,
+                    serial.getText(),
+                    LocalDate.parse(date.getText()),
+                    totalConEnvio,
+                    Sales.State.ACTIVE
+            );
+
+            this.ventaSeleccionada = sale;
+
+            // guardar en BD
+            if (saveSaleAndDetails(sale)) {
+                productDAO.subtractStock(products);
+                cleanFieldsAndTable();
+                setSerial();
+                total.setText("0.0");
+                products.clear();
+                updateReportsController();
+                MenuController.setAlert(Alert.AlertType.INFORMATION, "Venta generada correctamente.");
+            } else {
+                MenuController.setAlert(Alert.AlertType.ERROR, "Error al guardar la venta o los detalles.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            MenuController.setAlert(Alert.AlertType.ERROR,
+                    "Ocurrió un error al generar la venta: " + e.getMessage());
         }
-
-// Muestra el total al usuario
-        total.setText(String.valueOf(totalConEnvio));
     }
 
     // modificar para crear objeto de sales
