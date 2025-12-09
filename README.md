@@ -156,9 +156,88 @@ La Clase implementada fue <code>TabController</code> que aisla la lógica de est
 ```
 Ahora el título de la ventana obtiene el nombre correcto con el que se debería de mostrar.
 ### *Error 3:*
+Probelama con la funcionalidad del boton AYUDA.<br><br>
+**Motivo del problema**<br><br>
+Al seleccionar el boton AYUDA el sistema se bloqueaba, no respondia y al cabo de un rato dejaba de funcionar.<br>
+```java
+public void help(ActionEvent actionEvent) {
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/Borghii/Sales-System"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            setAlert(Alert.AlertType.ERROR,"The URL could not be opened. Check your internet connection.");
+        }
+```
+**Solución**<br><br>
+Se modifico la funcion del ManagementController.<br>
+```java
+public void help(ActionEvent actionEvent) {
+        lastTab = tabPaneManage.getSelectionModel().getSelectedIndex();
+        openNewStage(HELP_DETAIL_VIEW_FXML,"Ayuda");
+```
+Ademas se agrego una interfaz que muestra detalles del sistema.<br>
+```java
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.borghisales.salessysten.controllers.HelpController"
+            prefHeight="400.0" prefWidth="600.0">
 
+    <!-- Título de la ventana -->
+    <Label layoutX="150.0" layoutY="10.0" prefWidth="300.0" prefHeight="40.0"
+           text="AYUDA" underline="true" alignment="CENTER">
+        <font>
+            <Font size="28.0"/>
+        </font>
+    </Label>
+
+    <!-- Área de texto con instrucciones -->
+    <TextArea fx:id="textAreaHelp" layoutX="50.0" layoutY="70.0" prefWidth="500.0" prefHeight="250.0"
+              editable="false" wrapText="true">
+        <text>
+            Bienvenido al sistema Borghi Sales System.
+
+            Aquí puedes:
+            - Registrar ventas.
+            - Gestionar clientes.
+            - Agregar productos al carrito.
+            - Seleccionar opciones de envío y calcular el total.
+
+            Para más información sobre el sistema, puedes consultar el repositorio en GitHub.
+        </text>
+    </TextArea>
+
+    <!-- Botón para cerrar la ventana -->
+    <Button layoutX="250.0" layoutY="340.0" prefWidth="100.0" text="Cerrar" onAction="#closeWindow"/>
+
+</AnchorPane>
+```
+Tambien se agrego un HelpController para el contenido de esta.<br>
+```java
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Aquí se puede inicializar texto por defecto si se desea
+        if (textAreaHelp != null && textAreaHelp.getText().isEmpty()) {
+            textAreaHelp.setText(
+                    "Bienvenido al sistema Borghi Sales System.\n\n" +
+                            "- Registrar ventas.\n" +
+                            "- Gestionar clientes.\n" +
+                            "- Agregar productos al carrito.\n" +
+                            "- Seleccionar opciones de envío y calcular el total.\n\n" +
+                            "Para más información sobre el sistema, consulta el repositorio en GitHub."
+            );
+        }
+    }
+     @FXML
+      private void closeWindow(ActionEvent event) {
+          Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+          stage.close();
+      }
+```
 ## [+] Propuesta de Mejoras
 Propose Improvements
 Action: Suggest enhancements for the Seller, Sales, Customer, and Product entities.
