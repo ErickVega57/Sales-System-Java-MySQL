@@ -33,7 +33,9 @@
 Matricula: 24216391
 Nombre: Oscar de la Rosa Garcia
 Usuario de git: Lightz18
-Yo me encargue de la traduccion de la interfaz visible para los usuarios y ajuste los elemntos de estas para mayor organizacion y resultara mas comodo de emplear para el usuario. Ademas agregue un fondo y detalles a la interfaz de inicio para que fuera mas amigable. Corregi el bug del cambio de comas por puntos y repare el boton de AYUDA y le cree una interfaz con su controlador. Propuse las mejoras de stockMinimo y la de Envio, e implemente la de Envio donde cree 4 clases donde 3 de estas pertenecian a un package envio y la otra si se encontraba en model y tambien corregi errores detectados en esta mas adelante. Participe en la elaboracion del video donde se muestra la funcionalidad del sistema
+Yo me encargue de la traduccion de la interfaz visible para los usuarios y ajuste los elemntos de estas para mayor organizacion y resultara mas comodo de emplear para el usuario. Ademas agregue un fondo y detalles a la interfaz de inicio para que fuera mas amigable. Corregi el bug del cambio de comas por puntos y repare el boton de AYUDA y le cree una interfaz con su controlador. Propuse las mejoras de stockMinimo y la de Envio, e implemente la de Envio donde cree 4 clases donde 3 de estas pertenecian a un package envio y la otra si se encontraba en model y tambien corregi errores detectados en esta mas adelante. Participe en la elaboracion del video donde se muestra la funcionalidad del sistema<br>
+Usuario de git: ErickVega57
+Yo me encargue de la implementación del monto de descuento del subtotal y del iva dentro del programa, además de principalmente corregir errores y tambien de implentar alguinas funciones para hacer mas legible y estructurado el código, ademas tambien de agregar todos esos cambios hacia la interfaz grafica para hacerlo totalmente fiuncional, también manjee un fork del repositorio y de gestionar pull request entre mi compañero y yo<br>
 
 
 
@@ -42,8 +44,6 @@ Yo me encargue de la traduccion de la interfaz visible para los usuarios y ajust
 Use a digital tool (like Lucidchart, Draw.io, or any UML software) to create a UML diagram that represents these entities.
 Ensure that the diagram is clear and accurately reflects the structure of the code.
 Important: Add the UML diagram to the README file in the repository.
-
-
 
 
 
@@ -243,24 +243,26 @@ Tambien se agrego un HelpController para el contenido de esta.<br>
 ```
 
 
-
 ## [+] Propuesta de Mejoras
-Propose Improvements
-Action: Suggest enhancements for the Seller, Sales, Customer, and Product entities.
-How to Do It:
-Analyze each entity and think critically about how they can be improved.
-Consider Object-Oriented Programming principles such as encapsulation, inheritance, and polymorphism.
-Your proposals can include:
-Adding new attributes or methods.
-Creating new classes or interfaces.
-Documentation:
-Clearly outline your proposed changes in the README file.
-
 ### *Mejora 1:* <br><br>
-La primera propuesta de mejora consiste en implementar el cálculo del IVA en cada venta, de modo que los precios y montos finales resulten más realistas y acordes a un entorno comercial real. Con esta funcionalidad, el sistema de ventas no solo mostrará el subtotal de los productos, sino también el impuesto desglosado y el total a pagar, lo que permitirá tener un control más preciso de los ingresos, facilitar la elaboración de reportes contables y acercar el sistema a las necesidades de un negocio formal.
+La primera propuesta de mejora consiste en implementar el cálculo del IVA en cada venta, de modo que el sistema ya no solo muestre el total “en bruto”, sino que desglosa el **subtotal sin impuestos**, el **monto de IVA** aplicado y el **total a pagar**. Para lograrlo, se definió una tasa de IVA fija (`IVA_RATE = 0.16`) y se integró en el flujo de cálculo de la venta y del carrito de compras.
+### *Relacion con la POO:* <br><br>
+Esta mejora se relaciona directamente con la Programación Orientada a Objetos porque:
+- **Encapsulación:** La lógica del IVA se maneja a través de atributos y métodos específicos (por ejemplo, el uso de `IVA_RATE` como constante en el controlador y/o el modelo), evitando tener “números mágicos” dispersos por el código.
+- **Responsabilidad única:** Cada clase mantiene una responsabilidad clara. El `ShoppingCart` se encarga de representar una línea de venta (producto, cantidad, precio, totales), mientras que el controlador (`GenerateSaleController`) coordina el cálculo global de subtotal, IVA y total de la venta.
+- **Facilidad de mantenimiento y extensibilidad:** Al tener centralizada la tasa de IVA, si en el futuro cambia el porcentaje o se requiere manejar varias tasas, basta con modificar esa parte del modelo o agregar nueva lógica, sin reescribir todo el código de cálculo.
+
 
 ### *Mejora 2:* <br><br>
 La segunda propuesta de mejora consiste en implementar una selección de descuentos directamente en la interfaz de usuario al momento de realizar una venta, permitiendo elegir entre distintos porcentajes de descuento según el vendedor. Además, el sistema mostrará de forma explícita el monto ahorrado gracias al descuento aplicado, lo que hace el cálculo más transparente tanto para el usuario del sistema como para el cliente. Con esta mejora, el sistema de ventas se vuelve más claro para el cliente y para el vendedor.
+### *Relacion con la POO:* <br><br>
+Esta mejora también se apoya fuertemente en conceptos de POO:
+
+- **Abstracción mediante tipos propios:** Se utiliza un tipo enumerado (`enum DiscountRate`) para representar las diferentes tasas de descuento (CERO, DIEZ, QUINCE, VEINTE, CINCUENTA). Esto abstrae el manejo de los porcentajes y evita trabajar directamente con valores “duros” en el código.
+- **Encapsulación del comportamiento:** La lógica para obtener la tasa de descuento seleccionada se concentra en métodos como `getDiscountRate()`, y el cálculo de subtotales, totales y ahorro se realiza en métodos específicos (`CalcSubtotal`, `CalcTotal`, `CalcSaving`), manteniendo el código organizado y fácil de entender.
+- **Reutilización de código:** Al centralizar el cálculo en métodos reutilizables, la misma lógica puede emplearse al actualizar la tabla del carrito, los campos de resumen (subtotal, IVA, total, ahorro) y el objeto `Sales` que se persiste en la base de datos.
+- **Mantenibilidad:** Si en el futuro se desean agregar nuevos tipos de descuento o cambiar las reglas de negocio (por ejemplo, descuentos especiales por tipo de cliente o por volumen), basta con ampliar el `enum` o la lógica de cálculo, respetando la estructura existente sin romper el resto del sistema.
+
 
 ### *Mejora 3:* <br><br>
 La tercera propuesta consiste en implementar la funcionalidad de envío de productos en cada venta, y cálculo total de la venta con envio , permitiendo que el sistema distinga entre envío estándar y envío exprés, mostrando el costo correspondiente y sumándolo automáticamente al total de la venta. Esto permitirá reflejar de manera más realista los montos finales y ofrecer al cliente opciones de envío según sus necesidades.<br>
@@ -382,15 +384,8 @@ ahora ya tenemos una manera de asignar el descuento y de usar el iva para calcul
 
 
 
-
-
-
-
 Una vez calculado el subtotal con descuento, se añadió el procesamiento del IVA utilizando una tasa fija establecida en el sistema. El impuesto se calcula automáticamente sobre el subtotal resultante y se muestra desglosado en la interfaz, junto con el total final que el cliente debe pagar.
 Para que se muestre desglosado en la interfaz, se utiliza el objeto ShoppingCart que es principalmente un objeto para la interfaz gráfica, las tablas que salen en el programa y le agregamos los calculos en el construtor
-
-
-
 
 
 En la interfaz de usuario también se realizaron ajustes: se agregó un componente de selección de descuento (ComboBox) para permitir elegir entre diferentes porcentajes, y se añadieron campos informativos que muestran dinámicamente el subtotal, el descuento aplicado, el monto ahorrado, el IVA y el total a pagar. Estos elementos se actualizan en tiempo real conforme el usuario modifica la cantidad de productos o selecciona un porcentaje de descuento.
@@ -476,17 +471,9 @@ Ademas dentro de la clase GenerateSaleController se implementaron funcionalidade
 
 
 ## [+] Video Presentación
-Action: Record a video showcasing your project.
-How to Do It:
-Use screen recording software to capture your screen.
-In the video, make sure to include the following:
-Introduce yourself with your full name (both students).
-Show the build and run process without using any IDE.
-Log in and display all available UIs in a general way.
-Walk through the work you completed from point 2 to point 6.
-Upload: Choose a platform to upload your video (like YouTube or Vimeo) and paste the link in the README file under a special section for it.
+.
 
-<a href="aqui va el link del video">
+<a href="https://youtu.be/27jQScHEgNs">
   <img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Youtube">
 </a>
 
