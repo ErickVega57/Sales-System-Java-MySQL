@@ -34,7 +34,7 @@ import java.util.function.Predicate;
 
 public class ReportsController implements Initializable {
 
-    private static final String[] monthsShowed = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private static final String[] monthsShowed = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
     private static int idxMonth = LocalDate.now().getMonth().getValue()-1;
     private static int yearsShowed = LocalDate.now().getYear();
 
@@ -185,7 +185,7 @@ public class ReportsController implements Initializable {
                 try {
                     Scene scene = new Scene(fxmlLoaderSaleDetails.load());
                     Stage stage = new Stage();
-                    stage.setTitle("Sale detail");
+                    stage.setTitle("Detalles de venta");
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException e) {
@@ -203,7 +203,7 @@ public class ReportsController implements Initializable {
 
     public void onFilter(ActionEvent actionEvent) {
         if (sales.isEmpty()){
-            MenuController.setAlert(Alert.AlertType.WARNING,"There are no sales");
+            MenuController.setAlert(Alert.AlertType.WARNING,"No hay ventas");
             return;
         }
 
@@ -217,11 +217,11 @@ public class ReportsController implements Initializable {
 
 
             if (minAmount >= maxAmount) {
-                MenuController.setAlert(Alert.AlertType.ERROR,"Set correct amount intervals");
+                MenuController.setAlert(Alert.AlertType.ERROR,"Establecer intervalos de cantidades correctos");
                 return;
             }
             if (minDate.isAfter(maxDate)) {
-                MenuController.setAlert(Alert.AlertType.ERROR,"Set correct date intervals");
+                MenuController.setAlert(Alert.AlertType.ERROR,"Establecer correctamente los intervalos de fechas");
                 return;
             }
 
